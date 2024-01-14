@@ -10,18 +10,19 @@ services:
       MYSQL_PASSWORD: user
       MYSQL_ALLOW_EMPTY_PASSWORD: "1"
     volumes:
-      - "./db:/docker-entrypoint-initdb.d"
+      # - "./db:/docker-entrypoint-initdb.d"
+      - "./db:/var/lib/mysql"
     networks:
       - lamp_docker
   www:
     depends_on:
       - db
-    image: php:8.3.1-apache
+    image: pauline/php:mysql # si marche pas bullseye
     volumes:
       - "./:/var/www/html"
     ports:
-      - 80:80
-      - 443:443
+      - 8081:80
+      - 4430:443
     networks:
       - lamp_docker
   phpmyadmin:
